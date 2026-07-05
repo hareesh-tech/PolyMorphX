@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+
+# Generated run artifacts from local CLI/GUI testing
+modules/Output/
+utility_tools/exe_tools/Output/
+ControlFlowGraph/Output/
