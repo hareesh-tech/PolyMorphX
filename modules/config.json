@@ -1,0 +1,87 @@
+{
+  "engine": {
+    "name": "BinaryTransformEngine",
+    "version": "1.0",
+    "description": "Modular engine for chaining binary transformation techniques"},
+
+     "modules": {
+    "start": {
+      "enabled": true,
+      "techniques": [
+        {
+          "path": "{base_path}/modules/parser_and_extractor",
+          "parameters": {
+            "pe_file": "{input_path}",
+            "output_file": "step_01_{input_name}_text_sections.bin",
+            "output_dir": "{output_dir}",
+            "verbose": true
+          }
+        },
+        {
+          "path": "{base_path}/modules/disassembler",
+          "parameters": {
+            "input_file": "step_01_{input_name}_text_sections.bin",
+            "output_file": "step_02_{input_name}_disassembled_instructions.json",
+            "output_dir": "{output_dir}",
+            "architecture": "x86_64",
+            "verbose": true
+          }
+        },
+        {
+          "path": "{base_path}/modules/transformation_plan.py",
+          "parameters": {
+            "input_file": "step_02_{input_name}_disassembled_instructions.json",
+            "output_file": "step_03_{input_name}_validated_transformation_plan.json",
+            "output_dir": "{output_dir}",
+            "verbose": true,
+            "junk_density": 0.5,
+            "junk_size_min": 4,
+            "junk_size_max": 16
+          }
+        },
+        {
+          "path": "{base_path}/modules/transformation.py",
+          "parameters": {
+            "input_file": "step_02_{input_name}_disassembled_instructions.json",
+            "plan_file": "step_03_{input_name}_validated_transformation_plan.json",
+            "output_file": "step_04_{input_name}_transformed_instructions.json",
+            "output_dir": "{output_dir}",
+            "verbose": true,
+            "junk_density": 0.5,
+            "junk_size_min": 4,
+            "junk_size_max": 16
+          }
+        },
+        {
+          "path": "{base_path}/modules/binary_patcher.py",
+          "parameters": {
+            "exe_file": "{input_path}",
+            "transforms_file": "step_04_{input_name}_transformed_instructions.json",
+            "output_file": "step_05_{input_name}_patched.exe",
+            "output_dir": "{output_dir}",
+            "verbose": true
+          }
+        },
+        {
+          "path": "{base_path}/modules/cfg_permutator.py",
+          "parameters": {
+            "input_file": "step_05_{input_name}_patched.exe",
+            "output_file": "step_06_{input_name}_cfg_permuted.exe",
+            "swapped_file": "step_06_{input_name}_safe_swaps.json",
+            "output_dir": "{output_dir}",
+            "verbose": true
+          }
+        },
+        {
+          "path": "{base_path}/modules/signature_randomizer.py",
+          "parameters": {
+            "input_file": "step_06_{input_name}_cfg_permuted.exe",
+            "output_file": "step_07_{input_name}_signature_randomized.exe",
+            "output_dir": "{output_dir}",
+            "verbose": true
+          }
+        }
+      ]
+    }
+  }
+}   
