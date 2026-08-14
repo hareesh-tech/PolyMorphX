@@ -1,0 +1,39 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+.venv/
+venv/
+env/
+
+# ---- Node / frontend ----
+node_modules/
+dist/
+dist-ssr/
+*.local
+.vite/
+
+# ---- Engine run artifacts (generated per run) ----
+Output/
+modules/Output/
+ControlFlowGraph/Output/
+utility_tools/**/Output/
+web/backend/jobs_storage/
+
+# ---- Reports / presentation deliverables (kept outside the code repo) ----
+*.pdf
+*.docx
+*.pptx
+slide_assets/
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+*.bak
+*.bak_*
+*.obj
