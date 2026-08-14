@@ -353,8 +353,11 @@ class PESignatureRandomizer:
         print(f"Seed:   {self.seed}")
         print()
         
-        # Load PE
-        pe = pefile.PE(str(input_exe))
+        # Load PE from bytes to avoid mmap file locking conflicts when
+        # input_exe == output_exe (in-place modification after entry-point step).
+        input_size = input_exe.stat().st_size
+        pe_bytes = input_exe.read_bytes()
+        pe = pefile.PE(data=pe_bytes)
         
         print("Applying randomizations:")
         
@@ -370,7 +373,7 @@ class PESignatureRandomizer:
         # 4. Randomize debug directory (if present)
         self.add_debug_directory_entropy(pe)
         
-        # Write output FIRST
+        # Write output — file handle is now safely closed since we loaded from bytes
         output_exe.parent.mkdir(parents=True, exist_ok=True)
         pe.write(str(output_exe))
         pe.close()
@@ -379,7 +382,6 @@ class PESignatureRandomizer:
         self.add_overlay_data(output_exe, overlay_size)
         
         # Get sizes
-        input_size = input_exe.stat().st_size
         output_size = output_exe.stat().st_size
         
         print()
