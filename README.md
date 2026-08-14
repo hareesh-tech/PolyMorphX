@@ -79,6 +79,8 @@ PolyMorphX/
 │   ├── backend/                 #   FastAPI + Uvicorn + WebSocket streaming
 │   └── frontend/                #   React 19 + Vite + TypeScript + Tailwind + Recharts
 ├── MultipleTransformationPlan.md# Design notes on transformation strategies
+├── setup.sh / setup.ps1 / setup.bat     # one-shot install (Linux/macOS · Windows)
+├── run-web.sh / run-web.ps1 / run-web.bat # start backend + frontend
 ├── requirements.txt             # Engine Python dependencies
 └── README.md
 ```
@@ -93,7 +95,34 @@ PolyMorphX/
 
 ---
 
-## Installation
+## Quick start (automated setup)
+
+One script installs everything (engine venv, web backend venv, frontend deps) and
+leaves the project ready to run.
+
+**Linux / macOS**
+
+```bash
+./setup.sh        # installs all dependencies
+./run-web.sh      # starts backend :8123 + frontend :5173, then open http://localhost:5173
+```
+
+**Windows**
+
+```powershell
+.\setup.ps1       # or double-click setup.bat
+.\run-web.ps1     # or double-click run-web.bat, then open http://localhost:5173
+```
+
+> The setup script creates a project virtualenv at `.venv` (the web backend auto-detects
+> it as the engine interpreter), a backend virtualenv at `web/backend/.venv`, and installs
+> the frontend `node_modules`. All three are git-ignored.
+
+If you prefer to install manually, follow the steps below.
+
+---
+
+## Installation (manual)
 
 ### Engine (CLI)
 
@@ -151,6 +180,9 @@ Outputs (`step_01…step_07` binaries plus per-stage JSON) are written to the `-
 > You supply your own PE binary as input — no sample binaries are bundled with this repository.
 
 ### 2. Web console
+
+The quickest way is `./run-web.sh` (Linux/macOS) or `.\run-web.ps1` (Windows), which
+starts both servers. To run them manually:
 
 ```bash
 # terminal 1 — backend (engine deps must be importable; set POLYMORPH_PYTHON if needed)
