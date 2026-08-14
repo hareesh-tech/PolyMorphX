@@ -78,7 +78,6 @@ PolyMorphX/
 ├── web/                         # Web console (drives the same engine over HTTP)
 │   ├── backend/                 #   FastAPI + Uvicorn + WebSocket streaming
 │   └── frontend/                #   React 19 + Vite + TypeScript + Tailwind + Recharts
-├── gui.py                       # Legacy PyQt6 desktop GUI (optional, superseded by web/)
 ├── MultipleTransformationPlan.md# Design notes on transformation strategies
 ├── requirements.txt             # Engine Python dependencies
 └── README.md
@@ -167,11 +166,6 @@ Open the Vite URL (default `http://localhost:5173`). Upload a binary, set option
 **Launch Transformation** — the backend runs `orchestrator.py` as a subprocess and streams live
 pipeline progress, a console, an analytics dashboard, and downloadable artifacts. See
 [`web/README.md`](web/README.md) for details.
-
-### 3. Legacy desktop GUI (optional)
-
-`gui.py` is the original PyQt6 desktop front-end, superseded by the web console. To use it:
-`pip install PyQt6 && python gui.py`.
 
 ---
 

@@ -1,8 +1,8 @@
 # PolyMorph Web Console
 
-A web frontend for the PolyMorph binary transformation pipeline. This does not
-replace `gui.py` (the PyQt desktop app) or the `modules/orchestrator.py` CLI —
-it's a third way to drive the same engine, over HTTP instead of Qt or argv.
+A web frontend for the PolyMorph binary transformation pipeline. It does not
+replace the `modules/orchestrator.py` CLI — it's another way to drive the same
+engine, over HTTP instead of argv.
 
 ```
 web/
@@ -14,7 +14,7 @@ web/
 ## How it fits together
 
 The backend never reimplements the engine — it shells out to
-`modules/orchestrator.py` exactly like `gui.py` does, then classifies each log
+`modules/orchestrator.py`, then classifies each log
 line into structured events (`stage_started`, `job_completed`, `job_failed`)
 so the frontend can animate a pipeline tracker instead of just dumping text.
 
